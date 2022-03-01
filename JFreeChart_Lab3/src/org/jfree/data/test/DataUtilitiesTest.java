@@ -1,6 +1,10 @@
-package org.jfree.data;
+package org.jfree.data.test;
 
 import static org.junit.Assert.*;
+
+import org.jfree.data.DataUtilities;
+import org.jfree.data.KeyedValues;
+import org.jfree.data.Values2D;
 import org.jmock.*;
 import org.junit.*;
 
