@@ -363,5 +363,56 @@ public class RangeTest_v2 {
 		assertEquals("Range of 0 to Double.MAX_VALUE should constrain a value of MAX_VALUE to MAX_VALUE", Double.MAX_VALUE, result, precision);
 
 	}
+	
+	
+	//shift(Range, double, boolean)
+	
+	/**
+	 * Method that tests that shift method works when Zero Crossing is set to true.
+	 */
+	@Test
+	public void shiftWithZeroCrossing()
+	{
+		Range test = new Range(-10, 10);
+		Range result = new Range(10, 30);
+		test = Range.shift(test, 20, true);
+		assertEquals(test.equals(result), true);
+	}
+	
+	/**
+	 * A method that tests whether the shift method works when setting Zero Crossing to
+	 * false and trying to cross from a higher value.
+	 */
+	@Test
+	public void shiftWithNoZeroCrossingWithValuesAboveZero() {
+		Range test = new Range(-10, 10);
+		Range result = new Range(-30, 0);
+		test = Range.shift(test, -20, false);
+		assertEquals(test.equals(result), true);
+	}
+	
+	/**
+	 * A method that tests whether the shift method works when setting Zero Crossing to
+	 * false and trying to cross from a lower value.
+	 */
+	@Test
+	public void shiftWithNoZeroCrossingWithValuesBelowZero() {
+		Range test = new Range(-10, 10);
+		Range result = new Range(0, 30);
+		test = Range.shift(test, 20, false);
+		assertEquals(test.equals(result), true);
+	}
+	
+	/**
+	 * A method that tests whether the shift method works when setting Zero Crossing to
+	 * false and using zero values.
+	 */
+	@Test
+	public void shiftWithNoZeroCrossingWithZeroValues() {
+		Range test = new Range(0, 10);
+		Range result = new Range(-20, 0);
+		test = Range.shift(test, -20, false);
+		assertEquals(test.equals(result), true);
+	}
 
 }
