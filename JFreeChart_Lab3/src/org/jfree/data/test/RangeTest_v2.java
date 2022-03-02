@@ -414,5 +414,12 @@ public class RangeTest_v2 {
 		test = Range.shift(test, -20, false);
 		assertEquals(test.equals(result), true);
 	}
+	
+	// CombineIgnoringNaN
+	
+	@Test
+	public void CombineIgnoringNaNBothNULL() {
+		
+	}
 
 }
