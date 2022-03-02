@@ -26,26 +26,23 @@ public class RangeTest_v2 {
 		containsRangeTest = new Range(-11.5, 31.5);
 	}
 
-	
-	//Constructor
-	
+	// Constructor
+
 	@Test
 	/**
 	 * A method to test the constructor giving an exception when the second input is
 	 * lower than the first.
 	 */
-	public void switchedInputToConstructor()
-	{
+	public void switchedInputToConstructor() {
 		boolean exception = false;
 		try {
-			Range values = new Range(5, -10);
-		}catch(Exception e)
-		{
+			new Range(5, -10);
+		} catch (Exception e) {
 			exception = true;
 		}
 		assertEquals(exception, true);
 	}
-	
+
 	// getCentralValue
 
 	@Test
@@ -177,9 +174,10 @@ public class RangeTest_v2 {
 		Range values2 = new Range(-10, 20);
 		assertEquals("The input ranges have different upper bounds", false, values1.equals(values2));
 	}
-	
+
 	/**
-	 * A method testing that equals returns false if the input is not a Range object.
+	 * A method testing that equals returns false if the input is not a Range
+	 * object.
 	 */
 	@Test
 	public void equalsFalseForNonRange() {
@@ -261,9 +259,9 @@ public class RangeTest_v2 {
 		result = Range.combine(test1, test2);
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
-	
+
 	/**
-	 * A method testing the combine() method for the the correct combination of an 
+	 * A method testing the combine() method for the the correct combination of an
 	 * initialized Range object and a null Range object
 	 */
 	@Test
@@ -277,7 +275,6 @@ public class RangeTest_v2 {
 		result = Range.combine(test1, test2);
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
-	
 
 	// constrain
 
@@ -349,7 +346,8 @@ public class RangeTest_v2 {
 		double precision = 0.00000000000000000000000000000000000000000000001d;
 		Range minRange = new Range(0, Double.MIN_VALUE);
 		double result = minRange.constrain(Double.MIN_VALUE);
-		assertEquals("Range of 0 to Double.MIN_VALUE should constrain a value of MIN_VALUE to MIN_VALUE", Double.MIN_VALUE, result, precision);
+		assertEquals("Range of 0 to Double.MIN_VALUE should constrain a value of MIN_VALUE to MIN_VALUE",
+				Double.MIN_VALUE, result, precision);
 	}
 
 	/**
@@ -361,28 +359,27 @@ public class RangeTest_v2 {
 		double precision = 0.00000000000000000000000000000000000000000000001d;
 		Range minRange = new Range(0, Double.MAX_VALUE);
 		double result = minRange.constrain(Double.MAX_VALUE);
-		assertEquals("Range of 0 to Double.MAX_VALUE should constrain a value of MAX_VALUE to MAX_VALUE", Double.MAX_VALUE, result, precision);
+		assertEquals("Range of 0 to Double.MAX_VALUE should constrain a value of MAX_VALUE to MAX_VALUE",
+				Double.MAX_VALUE, result, precision);
 
 	}
-	
-	
-	//shift(Range, double, boolean)
-	
+
+	// shift(Range, double, boolean)
+
 	/**
 	 * Method that tests that shift method works when Zero Crossing is set to true.
 	 */
 	@Test
-	public void shiftWithZeroCrossing()
-	{
+	public void shiftWithZeroCrossing() {
 		Range test = new Range(-10, 10);
 		Range result = new Range(10, 30);
 		test = Range.shift(test, 20, true);
 		assertEquals(test.equals(result), true);
 	}
-	
+
 	/**
-	 * A method that tests whether the shift method works when setting Zero Crossing to
-	 * false and trying to cross from a higher value.
+	 * A method that tests whether the shift method works when setting Zero Crossing
+	 * to false and trying to cross from a higher value.
 	 */
 	@Test
 	public void shiftWithNoZeroCrossingWithValuesAboveZero() {
@@ -391,10 +388,10 @@ public class RangeTest_v2 {
 		test = Range.shift(test, -20, false);
 		assertEquals(test.equals(result), true);
 	}
-	
+
 	/**
-	 * A method that tests whether the shift method works when setting Zero Crossing to
-	 * false and trying to cross from a lower value.
+	 * A method that tests whether the shift method works when setting Zero Crossing
+	 * to false and trying to cross from a lower value.
 	 */
 	@Test
 	public void shiftWithNoZeroCrossingWithValuesBelowZero() {
@@ -403,10 +400,10 @@ public class RangeTest_v2 {
 		test = Range.shift(test, 20, false);
 		assertEquals(test.equals(result), true);
 	}
-	
+
 	/**
-	 * A method that tests whether the shift method works when setting Zero Crossing to
-	 * false and using zero values.
+	 * A method that tests whether the shift method works when setting Zero Crossing
+	 * to false and using zero values.
 	 */
 	@Test
 	public void shiftWithNoZeroCrossingWithZeroValues() {
@@ -415,204 +412,215 @@ public class RangeTest_v2 {
 		test = Range.shift(test, -20, false);
 		assertEquals(test.equals(result), true);
 	}
-	
+
 	// CombineIgnoringNaN
-	
+
 	@Test
 	public void CombineIgnoringNaNBothNULL() {
-		
+
 	}
 
-	//  getLength()
+	// getLength()
 	/**
 	 * A method that tests getLength when the range has different values.
 	 */
 	@Test
-	public void  getLengthDifferentValues() {
+	public void getLengthDifferentValues() {
 		Range test = new Range(5, 10);
 		assertEquals("getLength with different values", 5, test.getLength(), .001d);
 	}
-	
+
 	/**
-	 * A method that tests getLength when the range has the same value for upper and lower
+	 * A method that tests getLength when the range has the same value for upper and
+	 * lower
 	 */
 	@Test
-	public void  getLengthSameValues() {
+	public void getLengthSameValues() {
 		Range test = new Range(5, 5);
 		assertEquals("getLength with same values", 0, test.getLength(), .001d);
 	}
-	
-	 // intersects(double b0, double b1)
+
+	// intersects(double b0, double b1)
 	@Test
 	/**
-	 * A method that tests intersects() when the intersect range to goes from outside to inside the range
+	 * A method that tests intersects() when the intersect range to goes from
+	 * outside to inside the range
 	 */
 	public void intersectsOutIn() {
 		Range test = new Range(5, 10);
 		assertEquals(test.intersects(0, 7), true);
 	}
-	
+
 	@Test
 	/**
-	 * A method that tests intersects when the intersect range to goes from inside to outside the range
+	 * A method that tests intersects when the intersect range to goes from inside
+	 * to outside the range
 	 */
 	public void intersectsInOut() {
 		Range test = new Range(5, 10);
 		assertEquals(test.intersects(7, 15), true);
 	}
-	
+
 	@Test
 	/**
-	 * A method that tests intersects when the intersect range to goes from inside to inside the range
+	 * A method that tests intersects when the intersect range to goes from inside
+	 * to inside the range
 	 */
 	public void intersectsInIn() {
 		Range test = new Range(5, 10);
 		assertEquals(test.intersects(7, 8), true);
 	}
-	
+
 	@Test
 	/**
-	 * A method that tests intersects when the intersect range to goes from outside to outside below the range
+	 * A method that tests intersects when the intersect range to goes from outside
+	 * to outside below the range
 	 */
 	public void intersectsOutOutLow() {
 		Range test = new Range(5, 10);
 		assertEquals(test.intersects(1, 4), false);
 	}
-	
+
 	@Test
 	/**
-	 * A method that tests intersects when the intersect range to goes from outside to outside below the range
+	 * A method that tests intersects when the intersect range to goes from outside
+	 * to outside below the range
 	 */
 	public void intersectsOutOutHigh() {
 		Range test = new Range(5, 10);
 		assertEquals(test.intersects(11, 15), false);
 	}
-	
+
 	@Test
 	/**
-	 * A method that tests intersects when the intersect range to goes from outside below to outside above the range
+	 * A method that tests intersects when the intersect range to goes from outside
+	 * below to outside above the range
 	 */
 	public void intersectsOutOutLowHigh() {
 		Range test = new Range(5, 6);
 		assertEquals(test.intersects(4, 7), true);
 	}
-	
+
 	// interests(Range range)
 	@Test
 	/**
-	 * A method that tests intersects(Range range) when the intersect range intersects the test range
+	 * A method that tests intersects(Range range) when the intersect range
+	 * intersects the test range
 	 */
 	public void intersectsRange() {
 		Range test = new Range(5, 10);
 		Range intersect = new Range(7, 9);
 		assertEquals(test.intersects(intersect), true);
 	}
-	
+
 	// combine IgnoringNaN(Range range1, Range range2)
 	/**
 	 * A method testing the combineIgnoringNaN with ranges that intersect
 	 */
 	@Test
 	public void ignoringnanIntersecting() {
-		
+
 		Range rang1 = new Range(5, 10);
 		Range rang2 = new Range(7, 15);
 		Range expected = new Range(5, 15);
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine intersecting ranges", expected, result);
 	}
-	
+
 	/**
 	 * A method testing the combineIgnoringNaN with the first null range
 	 */
 	@Test
 	public void ignoringnanFirstNull() {
-		
+
 		Range rang1 = null;
 		Range rang2 = new Range(7, 15);
 		Range expected = new Range(7, 15);
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine initilized range with a null", expected, result);
 	}
-	
+
 	/**
 	 * A method testing the combineIgnoringNaN with the second null range
 	 */
 	@Test
 	public void ignoringnanSecondNull() {
-		
+
 		Range rang1 = new Range(5, 10);
 		Range rang2 = null;
 		Range expected = new Range(5, 10);
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
-	
+
 	/**
-	 * A method testing the combineIgnoringNaN with the first range all NaN and the second range null
+	 * A method testing the combineIgnoringNaN with the first range all NaN and the
+	 * second range null
 	 */
 	@Test
 	public void ignoringnanFirstNaNSecondNull() {
-		
+
 		Range rang1 = new Range(Double.NaN, Double.NaN);
 		Range rang2 = null;
 		Range expected = null;
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
-	
+
 	/**
-	 * A method testing the combineIgnoringNaN with the second range all NaN and the first range null
+	 * A method testing the combineIgnoringNaN with the second range all NaN and the
+	 * first range null
 	 */
 	@Test
 	public void ignoringnanFirstNullSecondNaN() {
-		
+
 		Range rang2 = new Range(Double.NaN, Double.NaN);
 		Range rang1 = null;
 		Range expected = null;
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
-	
+
 	/**
 	 * A method testing the combineIgnoringNaN with both ranges all NaN
 	 */
 	@Test
 	public void ignoringnanBothNaN() {
-		
+
 		Range rang2 = new Range(Double.NaN, Double.NaN);
 		Range rang1 = new Range(Double.NaN, Double.NaN);
 		Range expected = null;
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
-	
+
 	/**
 	 * A method testing the combineIgnoringNaN with all the ranges null
 	 */
 	@Test
 	public void ignoringnanBothNull() {
-		
+
 		Range rang2 = null;
 		Range rang1 = null;
 		Range expected = null;
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine null range with a null range", expected, result);
 	}
-	
+
 	/**
 	 * A method testing the combineIgnoringNaN with the ranges lower value is NaN
 	 */
 	@Test
 	public void ignoringnanLowerNan() {
-		
-		Range rang2 = new Range(Double.NaN, 5);
-		Range rang1 = new Range(Double.NaN, 10);
-		Range expected = new Range(Double.NaN, 10);
+
+		Range rang2 = new Range(Double.NaN, 5.0);
+		Range rang1 = new Range(Double.NaN, 10.0);
+		Range expected = new Range(Double.NaN, 10.0);
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
-		assertEquals("Combine initialized NaN range with a initialized NaN range", expected, result);
+		assertEquals("Combine initialized NaN range with a initialized NaN range", expected.getLowerBound(), result.getLowerBound(),0.0001);
+		assertEquals("Combine initialized NaN range with a initialized NaN range", expected.getUpperBound(), result.getUpperBound(),0.0001);
 	}
-	
+
 	// expandToInclude(Range range, double value)
 	/**
 	 * A method testing expandToInclude with the value above the range
@@ -624,7 +632,7 @@ public class RangeTest_v2 {
 		Range expected = new Range(5, 15);
 		assertEquals("expandToInclude with value above range", expected, result);
 	}
-	
+
 	@Test
 	/**
 	 * A method testing expandToInclude with the value below the range
@@ -635,7 +643,7 @@ public class RangeTest_v2 {
 		Range expected = new Range(0, 10);
 		assertEquals("expandToInclude with value below range", expected, result);
 	}
-	
+
 	/**
 	 * A method testing expandToInclude with a null range and value
 	 */
@@ -646,7 +654,7 @@ public class RangeTest_v2 {
 		Range expected = new Range(15, 15);
 		assertEquals("expandToInclude with value and null range", expected, result);
 	}
-	
+
 	/**
 	 * A method testing expandToInclude with a value already inside the range
 	 */
@@ -657,10 +665,11 @@ public class RangeTest_v2 {
 		Range expected = new Range(5, 10);
 		assertEquals("expandToInclude with value already inside range", expected, result);
 	}
-	
+
 	// expand(Range range, double lowerMargin, double upperMargin)
 	/**
-	 * A method testing expand with the lowerbound moving down and the upperbound moving up
+	 * A method testing expand with the lowerbound moving down and the upperbound
+	 * moving up
 	 */
 	@Test
 	public void expandEqual() {
@@ -669,7 +678,7 @@ public class RangeTest_v2 {
 		Range expected = new Range(4.75, 10.25);
 		assertEquals("expand with equal margins", expected, result);
 	}
-	
+
 	/**
 	 * A method testing expand with the lowerbound moving higher than the upperbound
 	 */
@@ -680,10 +689,11 @@ public class RangeTest_v2 {
 		Range expected = new Range(12.5, 12.5);
 		assertEquals("expand with positive values", expected, result);
 	}
-	
+
 	// shift(Range base, double delta)
 	/**
-	 * A method testing shift which used shift(Range base, double delta, boolean allowZeroCrossing) to complete.
+	 * A method testing shift which used shift(Range base, double delta, boolean
+	 * allowZeroCrossing) to complete.
 	 */
 	@Test
 	public void shiftBasicValue() {
@@ -692,7 +702,7 @@ public class RangeTest_v2 {
 		Range expected = new Range(10, 15);
 		assertEquals("shiftBasicValue with positive delta", expected, result);
 	}
-	
+
 	// scale(Range base, double factor)
 	/**
 	 * A method testing scale with a positive scaling factor
@@ -704,13 +714,13 @@ public class RangeTest_v2 {
 		Range expected = new Range(10, 20);
 		assertEquals("scale with positive factor", expected, result);
 	}
-	
+
 	@Rule
-	  public final ExpectedException exception = ExpectedException.none();
-	
+	public final ExpectedException exception = ExpectedException.none();
+
 	/**
-	 * A method testing scale with a negative scaling factor. 
-	 * Exception is thrown by scale when it is negative.
+	 * A method testing scale with a negative scaling factor. Exception is thrown by
+	 * scale when it is negative.
 	 */
 	@Test
 	public void scaleNegativeFactor() {
