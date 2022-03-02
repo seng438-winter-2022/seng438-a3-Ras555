@@ -611,4 +611,49 @@ public class RangeTest_v2 {
 		Range result = Range.combineIgnoringNaN(rang1, rang2);
 		assertEquals("Combine initialized NaN range with a initialized NaN range", expected, result);
 	}
+	
+	// expandToInclude(Range range, double value)
+	/**
+	 * A method testing expandToInclude with the value above the range
+	 */
+	@Test
+	public void expandToIncludeAbove() {
+		Range rang = new Range(5, 10);
+		Range result = Range.expandToInclude(rang, 15);
+		Range expected = new Range(5, 15);
+		assertEquals("expandToInclude with value above range", expected, result);
+	}
+	
+	@Test
+	/**
+	 * A method testing expandToInclude with the value below the range
+	 */
+	public void expandToIncludeBelow() {
+		Range rang = new Range(5, 10);
+		Range result = Range.expandToInclude(rang, 0);
+		Range expected = new Range(0, 10);
+		assertEquals("expandToInclude with value below range", expected, result);
+	}
+	
+	/**
+	 * A method testing expandToInclude with a null range and value
+	 */
+	@Test
+	public void expandToIncludeNull() {
+		Range rang = null;
+		Range result = Range.expandToInclude(rang, 15);
+		Range expected = new Range(15, 15);
+		assertEquals("expandToInclude with value and null range", expected, result);
+	}
+	
+	/**
+	 * A method testing expandToInclude with a value already inside the range
+	 */
+	@Test
+	public void expandToIncludeInside() {
+		Range rang = new Range(5, 10);
+		Range result = Range.expandToInclude(rang, 7);
+		Range expected = new Range(5, 10);
+		assertEquals("expandToInclude with value already inside range", expected, result);
+	}
 }
