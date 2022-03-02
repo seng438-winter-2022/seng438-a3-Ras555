@@ -506,4 +506,109 @@ public class RangeTest_v2 {
 		Range intersect = new Range(7, 9);
 		assertEquals(test.intersects(intersect), true);
 	}
+	
+	// combine IgnoringNaN(Range range1, Range range2)
+	/**
+	 * A method testing the combineIgnoringNaN with ranges that intersect
+	 */
+	@Test
+	public void ignoringnanIntersecting() {
+		
+		Range rang1 = new Range(5, 10);
+		Range rang2 = new Range(7, 15);
+		Range expected = new Range(5, 15);
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine intersecting ranges", expected, result);
+	}
+	
+	/**
+	 * A method testing the combineIgnoringNaN with the first null range
+	 */
+	@Test
+	public void ignoringnanFirstNull() {
+		
+		Range rang1 = null;
+		Range rang2 = new Range(7, 15);
+		Range expected = new Range(7, 15);
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine initilized range with a null", expected, result);
+	}
+	
+	/**
+	 * A method testing the combineIgnoringNaN with the second null range
+	 */
+	@Test
+	public void ignoringnanSecondNull() {
+		
+		Range rang1 = new Range(5, 10);
+		Range rang2 = null;
+		Range expected = new Range(5, 10);
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine initilized range with a null range", expected, result);
+	}
+	
+	/**
+	 * A method testing the combineIgnoringNaN with the first range all NaN and the second range null
+	 */
+	@Test
+	public void ignoringnanFirstNaNSecondNull() {
+		
+		Range rang1 = new Range(Double.NaN, Double.NaN);
+		Range rang2 = null;
+		Range expected = null;
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine initilized range with a null range", expected, result);
+	}
+	
+	/**
+	 * A method testing the combineIgnoringNaN with the second range all NaN and the first range null
+	 */
+	@Test
+	public void ignoringnanFirstNullSecondNaN() {
+		
+		Range rang2 = new Range(Double.NaN, Double.NaN);
+		Range rang1 = null;
+		Range expected = null;
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine initilized range with a null range", expected, result);
+	}
+	
+	/**
+	 * A method testing the combineIgnoringNaN with both ranges all NaN
+	 */
+	@Test
+	public void ignoringnanBothNaN() {
+		
+		Range rang2 = new Range(Double.NaN, Double.NaN);
+		Range rang1 = new Range(Double.NaN, Double.NaN);
+		Range expected = null;
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine initilized range with a null range", expected, result);
+	}
+	
+	/**
+	 * A method testing the combineIgnoringNaN with all the ranges null
+	 */
+	@Test
+	public void ignoringnanBothNull() {
+		
+		Range rang2 = null;
+		Range rang1 = null;
+		Range expected = null;
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine null range with a null range", expected, result);
+	}
+	
+	/**
+	 * A method testing the combineIgnoringNaN with the ranges lower value is NaN
+	 */
+	@Test
+	public void ignoringnanLowerNan() {
+		
+		Range rang2 = new Range(Double.NaN, 5);
+		Range rang1 = new Range(Double.NaN, 10);
+		Range expected = new Range(Double.NaN, 10);
+		Range result = Range.combineIgnoringNaN(rang1, rang2);
+		assertEquals("Combine initialized NaN range with a initialized NaN range", expected, result);
+	}
 }
