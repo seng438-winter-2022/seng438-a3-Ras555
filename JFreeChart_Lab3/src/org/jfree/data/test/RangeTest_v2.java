@@ -25,6 +25,26 @@ public class RangeTest_v2 {
 		containsRangeTest = new Range(-11.5, 31.5);
 	}
 
+	
+	//Constructor
+	
+	@Test
+	/**
+	 * A method to test the constructor giving an exception when the second input is
+	 * lower than the first.
+	 */
+	public void switchedInputToConstructor()
+	{
+		boolean exception = false;
+		try {
+			Range values = new Range(5, -10);
+		}catch(Exception e)
+		{
+			exception = true;
+		}
+		assertEquals(exception, true);
+	}
+	
 	// getCentralValue
 
 	@Test
@@ -156,6 +176,16 @@ public class RangeTest_v2 {
 		Range values2 = new Range(-10, 20);
 		assertEquals("The input ranges have different upper bounds", false, values1.equals(values2));
 	}
+	
+	/**
+	 * A method testing that equals returns false if the input is not a Range object.
+	 */
+	@Test
+	public void equalsFalseForNonRange() {
+		Range values1 = new Range(-10, 10);
+		double value2 = 5;
+		assertEquals(false, values1.equals(value2));
+	}
 
 	// getLowerBound
 
@@ -220,7 +250,7 @@ public class RangeTest_v2 {
 	 * null Range object and an initialized Range object
 	 */
 	@Test
-	public void combineTestNull() {
+	public void combineTestInput1IsNull() {
 		Range test1, test2;
 		Range result, expected;
 
@@ -230,6 +260,23 @@ public class RangeTest_v2 {
 		result = Range.combine(test1, test2);
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
+	
+	/**
+	 * A method testing the combine() method for the the correct combination of an 
+	 * initialized Range object and a null Range object
+	 */
+	@Test
+	public void combineTestInput2IsNull() {
+		Range test1, test2;
+		Range result, expected;
+
+		test2 = null;
+		test1 = new Range(0, 10);
+		expected = new Range(0, 10);
+		result = Range.combine(test1, test2);
+		assertEquals("Combine initilized range with a null range", expected, result);
+	}
+	
 
 	// constrain
 
