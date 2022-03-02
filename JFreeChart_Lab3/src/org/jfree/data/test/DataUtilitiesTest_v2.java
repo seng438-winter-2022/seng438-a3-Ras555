@@ -235,6 +235,22 @@ public class DataUtilitiesTest_v2 {
 	@Test
 	/**
 	 * A method for testing the equal(double[][]a, double[][]b) method when the
+	 * first value is null, but the second isn't.
+	 */
+	public void equalForFirstValueNull() {
+		double[][] array1 = new double[10][10];
+		double[][] array2 = null;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				array1[i][j] = i * 1.5 + j;
+			}
+		}
+		assertEquals(DataUtilities.equal(array2, array1), false);
+	}	
+	
+	@Test
+	/**
+	 * A method for testing the equal(double[][]a, double[][]b) method when the
 	 * second value is null, but the first isn't.
 	 */
 	public void equalForSecondValueNull() {
@@ -481,4 +497,90 @@ public class DataUtilitiesTest_v2 {
 		assertArrayEquals(result, array1);
 		assertNotEquals(array2, result);
 	}
+
+	// calculateRowTotal
+
+	@Test
+	/**
+	 * A method for testing the calculateRowTotal(Values2D data, int row)
+	 * method when there are two columns and the result is positive.
+	 */
+	public void calculateRowTotalForTwoValues() {
+		Values2D values = mockingContext.mock(Values2D.class);
+		mockingContext.checking(new Expectations() {
+			{
+				oneOf(values).getColumnCount();
+				will(returnValue(2));
+				oneOf(values).getValue(0, 0);
+				will(returnValue(1.25));
+				oneOf(values).getValue(0, 1);
+				will(returnValue(2.5));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0);
+		assertEquals("First comlum has values 1.25 and 2.5 which resultsin 3.75", 3.75, result, .01d);
+	}
+	
+	@Test
+	/**
+	 * A method for testing the calculateRowTotal(Values2D data, int row)
+	 * method when the number of rows is above the boundary of 1 has negative values.
+	 */
+	public void calculateRowTotalForNegativeValues() {
+		Values2D values = mockingContext.mock(Values2D.class);
+		mockingContext.checking(new Expectations() {
+			{
+				oneOf(values).getColumnCount();
+				will(returnValue(3));
+				oneOf(values).getValue(0, 0);
+				will(returnValue(1.25));
+				oneOf(values).getValue(0, 1);
+				will(returnValue(2.5));
+				oneOf(values).getValue(0, 2);
+				will(returnValue(-5.5));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0);
+		assertEquals("First comlum has values -5.5, 1.25 and 2.5 which resultsin -1.75", -1.75, result, .01d);
+	}
+
+	@Test
+	/**
+	 * A method for testing the calculateRowTotal(Values2D data, int row)
+	 * method when the number of rows is on the boundary of 1.
+	 */
+	public void calculateRowTotalForOneValues() {
+		Values2D values = mockingContext.mock(Values2D.class);
+		mockingContext.checking(new Expectations() {
+			{
+				oneOf(values).getColumnCount();
+				will(returnValue(1));
+				oneOf(values).getRowCount();
+				will(returnValue(2));
+				oneOf(values).getValue(1, 0);
+				will(returnValue(1.25));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 1);
+		assertEquals("Second column has only 1.25", 1.25, result, .01d);
+	}
+
+	@Test
+	/**
+	 * A method for testing the calculateRowTotal(Values2D data, int row)
+	 * method when the number of rows is below the boundary of 1.
+	 */
+	public void calculateRowTotalForZeroValues() {
+		Values2D values = mockingContext.mock(Values2D.class);
+		mockingContext.checking(new Expectations() {
+			{
+				oneOf(values).getColumnCount();
+				will(returnValue(0));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0);
+		assertEquals("Empty input should return 0", 0, result, .01d);
+	}
+
+	
 }
