@@ -422,4 +422,88 @@ public class RangeTest_v2 {
 		
 	}
 
+	//  getLength()
+	/**
+	 * A method that tests getLength when the range has different values.
+	 */
+	@Test
+	public void  getLengthDifferentValues() {
+		Range test = new Range(5, 10);
+		assertEquals("getLength with different values", 5, test.getLength(), .001d);
+	}
+	
+	/**
+	 * A method that tests getLength when the range has the same value for upper and lower
+	 */
+	@Test
+	public void  getLengthSameValues() {
+		Range test = new Range(5, 5);
+		assertEquals("getLength with same values", 0, test.getLength(), .001d);
+	}
+	
+	 // intersects(double b0, double b1)
+	@Test
+	/**
+	 * A method that tests intersects() when the intersect range to goes from outside to inside the range
+	 */
+	public void intersectsOutIn() {
+		Range test = new Range(5, 10);
+		assertEquals(test.intersects(0, 7), true);
+	}
+	
+	@Test
+	/**
+	 * A method that tests intersects when the intersect range to goes from inside to outside the range
+	 */
+	public void intersectsInOut() {
+		Range test = new Range(5, 10);
+		assertEquals(test.intersects(7, 15), true);
+	}
+	
+	@Test
+	/**
+	 * A method that tests intersects when the intersect range to goes from inside to inside the range
+	 */
+	public void intersectsInIn() {
+		Range test = new Range(5, 10);
+		assertEquals(test.intersects(7, 8), true);
+	}
+	
+	@Test
+	/**
+	 * A method that tests intersects when the intersect range to goes from outside to outside below the range
+	 */
+	public void intersectsOutOutLow() {
+		Range test = new Range(5, 10);
+		assertEquals(test.intersects(1, 4), false);
+	}
+	
+	@Test
+	/**
+	 * A method that tests intersects when the intersect range to goes from outside to outside below the range
+	 */
+	public void intersectsOutOutHigh() {
+		Range test = new Range(5, 10);
+		assertEquals(test.intersects(11, 15), false);
+	}
+	
+	@Test
+	/**
+	 * A method that tests intersects when the intersect range to goes from outside below to outside above the range
+	 */
+	public void intersectsOutOutLowHigh() {
+		Range test = new Range(5, 6);
+		assertEquals(test.intersects(4, 7), true);
+	}
+	
+	// interests(Range range)
+	@Test
+	/**
+	 * A method that tests intersects(Range range) when the intersect range intersects the test range
+	 */
+	public void intersectsRange() {
+		Range test = new Range(5, 10);
+		Range intersect = new Range(7, 9);
+		assertEquals(test.intersects(intersect), true);
+	}
 }
