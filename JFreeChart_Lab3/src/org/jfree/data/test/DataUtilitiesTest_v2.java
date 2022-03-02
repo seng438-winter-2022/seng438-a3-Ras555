@@ -220,6 +220,51 @@ public class DataUtilitiesTest_v2 {
 		}
 		assertEquals(DataUtilities.equal(array1, array2), false);
 	}
+	
+	@Test
+	/**
+	 * A method for testing the equal(double[][]a, double[][]b) method when both
+	 * inputs are null.
+	 */
+	public void equalForBothValuesNull() {
+		double[][] array1 = null;
+		double[][] array2 = null;
+		assertEquals(DataUtilities.equal(array1, array2), true);
+	}
+	
+	@Test
+	/**
+	 * A method for testing the equal(double[][]a, double[][]b) method when the
+	 * second value is null, but the first isn't.
+	 */
+	public void equalForSecondValueNull() {
+		double[][] array1 = new double[10][10];
+		double[][] array2 = null;
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				array1[i][j] = i * 1.5 + j;
+			}
+		}
+		assertEquals(DataUtilities.equal(array1, array2), false);
+	}	
+	
+	@Test
+	/**
+	 * A method for testing the equal(double[][]a, double[][]b) method when the
+	 * inputs have unequal length.
+	 */
+	public void equalForInequalLengths() {
+		double[][] array1 = new double[5][5];
+		double[][] array2 = new double[10][10];
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if(j < 5 && i < 5)
+					array1[i][j] = i * 1.5 + j;
+				array2[i][j] = i * 1.5 + j;
+			}
+		}
+		assertEquals(DataUtilities.equal(array1, array2), false);
+	}
 
 	// getCumulativePercentages
 
