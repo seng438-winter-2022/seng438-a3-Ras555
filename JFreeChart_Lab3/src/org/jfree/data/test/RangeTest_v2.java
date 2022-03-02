@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.jfree.data.Range;
 import org.junit.*;
+import org.junit.rules.ExpectedException;
 
 /**
  * This class contains test cases used for testing the functionality of the
@@ -655,5 +656,66 @@ public class RangeTest_v2 {
 		Range result = Range.expandToInclude(rang, 7);
 		Range expected = new Range(5, 10);
 		assertEquals("expandToInclude with value already inside range", expected, result);
+	}
+	
+	// expand(Range range, double lowerMargin, double upperMargin)
+	/**
+	 * A method testing expand with the lowerbound moving down and the upperbound moving up
+	 */
+	@Test
+	public void expandEqual() {
+		Range rang = new Range(5, 10);
+		Range result = Range.expand(rang, 0.05, 0.05);
+		Range expected = new Range(4.75, 10.25);
+		assertEquals("expand with equal margins", expected, result);
+	}
+	
+	/**
+	 * A method testing expand with the lowerbound moving higher than the upperbound
+	 */
+	@Test
+	public void expandLowerBecomesBigger() {
+		Range rang = new Range(5, 10);
+		Range result = Range.expand(rang, -2, 0);
+		Range expected = new Range(12.5, 12.5);
+		assertEquals("expand with positive values", expected, result);
+	}
+	
+	// shift(Range base, double delta)
+	/**
+	 * A method testing shift which used shift(Range base, double delta, boolean allowZeroCrossing) to complete.
+	 */
+	@Test
+	public void shiftBasicValue() {
+		Range rang = new Range(5, 10);
+		Range result = Range.shift(rang, 5);
+		Range expected = new Range(10, 15);
+		assertEquals("shiftBasicValue with positive delta", expected, result);
+	}
+	
+	// scale(Range base, double factor)
+	/**
+	 * A method testing scale with a positive scaling factor
+	 */
+	@Test
+	public void scalePositiveFactor() {
+		Range rang = new Range(5, 10);
+		Range result = Range.scale(rang, 2);
+		Range expected = new Range(10, 20);
+		assertEquals("scale with positive factor", expected, result);
+	}
+	
+	@Rule
+	  public final ExpectedException exception = ExpectedException.none();
+	
+	/**
+	 * A method testing scale with a negative scaling factor. 
+	 * Exception is thrown by scale when it is negative.
+	 */
+	@Test
+	public void scaleNegativeFactor() {
+		Range rang = new Range(5, 10);
+		exception.expect(IllegalArgumentException.class);
+		Range.scale(rang, -2);
 	}
 }
