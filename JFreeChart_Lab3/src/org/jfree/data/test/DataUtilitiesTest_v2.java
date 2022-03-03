@@ -55,11 +55,11 @@ public class DataUtilitiesTest_v2 {
 		double[] input = new double[10];
 		Number[] expected = new Number[10];
 		for (int n = 0; n < 10; n++) {
-			input[n] = (n-5) * 1.5;
-			expected[n] = (n-5) * 1.5;
+			input[n] = (n - 5) * 1.5;
+			expected[n] = (n - 5) * 1.5;
 		}
 		Number[] result = DataUtilities.createNumberArray(input);
-		assertArrayEquals("Ten value double array creates a ten value Number array",expected, result);
+		assertArrayEquals("Ten value double array creates a ten value Number array", expected, result);
 	}
 
 	// createNumberArray2D
@@ -220,7 +220,7 @@ public class DataUtilitiesTest_v2 {
 		}
 		assertEquals(DataUtilities.equal(array1, array2), false);
 	}
-	
+
 	@Test
 	/**
 	 * A method for testing the equal(double[][]a, double[][]b) method when both
@@ -231,7 +231,7 @@ public class DataUtilitiesTest_v2 {
 		double[][] array2 = null;
 		assertEquals(DataUtilities.equal(array1, array2), true);
 	}
-	
+
 	@Test
 	/**
 	 * A method for testing the equal(double[][]a, double[][]b) method when the
@@ -246,8 +246,8 @@ public class DataUtilitiesTest_v2 {
 			}
 		}
 		assertEquals(DataUtilities.equal(array2, array1), false);
-	}	
-	
+	}
+
 	@Test
 	/**
 	 * A method for testing the equal(double[][]a, double[][]b) method when the
@@ -262,8 +262,8 @@ public class DataUtilitiesTest_v2 {
 			}
 		}
 		assertEquals(DataUtilities.equal(array1, array2), false);
-	}	
-	
+	}
+
 	@Test
 	/**
 	 * A method for testing the equal(double[][]a, double[][]b) method when the
@@ -274,7 +274,7 @@ public class DataUtilitiesTest_v2 {
 		double[][] array2 = new double[10][10];
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				if(j < 5 && i < 5)
+				if (j < 5 && i < 5)
 					array1[i][j] = i * 1.5 + j;
 				array2[i][j] = i * 1.5 + j;
 			}
@@ -315,8 +315,8 @@ public class DataUtilitiesTest_v2 {
 
 		KeyedValues result = DataUtilities.getCumulativePercentages(values);
 		assertEquals("First index has 2 thus 2/5 result should be 0.4", 0.4, result.getValue(0));
-		assertEquals("Second index has 1 thus 3/5 result should be 0.6",0.6, result.getValue(1));
-		assertEquals("Third index has 2 thus 5/5 result should be 1.0",1.0, result.getValue(2));
+		assertEquals("Second index has 1 thus 3/5 result should be 0.6", 0.6, result.getValue(1));
+		assertEquals("Third index has 2 thus 5/5 result should be 1.0", 1.0, result.getValue(2));
 	}
 
 	@Test
@@ -338,6 +338,27 @@ public class DataUtilitiesTest_v2 {
 	}
 
 	// calculateColumnTotal
+	
+	@Test
+	/**
+	 * A method for testing the calculateColumnTotal(Values2D data, int column)
+	 * method when the rows contain a null value.
+	 */
+	public void calculateColumnTotalForNullValues() {
+		Values2D values = mockingContext.mock(Values2D.class);
+		mockingContext.checking(new Expectations() {
+			{
+				oneOf(values).getRowCount();
+				will(returnValue(2));
+				oneOf(values).getValue(0, 0);
+				will(returnValue(null));
+				oneOf(values).getValue(1, 0);
+				will(returnValue(2.5));
+			}
+		});
+		double result = DataUtilities.calculateColumnTotal(values, 0);
+		assertEquals("First comlum has value 2.5 which results in 2.5", 2.5, result, .01d);
+	}
 
 	@Test
 	/**
@@ -359,11 +380,12 @@ public class DataUtilitiesTest_v2 {
 		double result = DataUtilities.calculateColumnTotal(values, 0);
 		assertEquals("First comlum has values 1.25 and 2.5 which resultsin 3.75", 3.75, result, .01d);
 	}
-	
+
 	@Test
 	/**
 	 * A method for testing the calculateColumnTotal(Values2D data, int column)
-	 * method when the number of rows is above the boundary of 1 has negative values.
+	 * method when the number of rows is above the boundary of 1 has negative
+	 * values.
 	 */
 	public void calculateColumnTotalForNegativeValues() {
 		Values2D values = mockingContext.mock(Values2D.class);
@@ -422,6 +444,17 @@ public class DataUtilitiesTest_v2 {
 	}
 
 	// clone
+	/**
+	 * A method for testing the clone(double [][] source) method when the row values
+	 * are null.
+	 */
+	@Test
+	public void cloneForNullRowArrayTest() {
+		double[][] array = new double[10][];
+		double[][] result = DataUtilities.clone(array);
+		assertArrayEquals(result, array);
+	}
+
 	/**
 	 * A method for testing the clone(double [][] source) method when the values are
 	 * low low.
@@ -499,11 +532,32 @@ public class DataUtilitiesTest_v2 {
 	}
 
 	// calculateRowTotal
+	
+	@Test
+	/**
+	 * A method for testing the calculateRowTotal(Values2D data, int row) method
+	 * when there are two columns with a null value and the result is positive.
+	 */
+	public void calculateRowTotalForNullValue() {
+		Values2D values = mockingContext.mock(Values2D.class);
+		mockingContext.checking(new Expectations() {
+			{
+				oneOf(values).getColumnCount();
+				will(returnValue(2));
+				oneOf(values).getValue(0, 0);
+				will(returnValue(null));
+				oneOf(values).getValue(0, 1);
+				will(returnValue(2.5));
+			}
+		});
+		double result = DataUtilities.calculateRowTotal(values, 0);
+		assertEquals("First comlum has value 2.5 which results in 2.5", 2.5, result, .01d);
+	}
 
 	@Test
 	/**
-	 * A method for testing the calculateRowTotal(Values2D data, int row)
-	 * method when there are two columns and the result is positive.
+	 * A method for testing the calculateRowTotal(Values2D data, int row) method
+	 * when there are two columns and the result is positive.
 	 */
 	public void calculateRowTotalForTwoValues() {
 		Values2D values = mockingContext.mock(Values2D.class);
@@ -518,13 +572,13 @@ public class DataUtilitiesTest_v2 {
 			}
 		});
 		double result = DataUtilities.calculateRowTotal(values, 0);
-		assertEquals("First comlum has values 1.25 and 2.5 which resultsin 3.75", 3.75, result, .01d);
+		assertEquals("First comlum has values 1.25 and 2.5 which results in 3.75", 3.75, result, .01d);
 	}
-	
+
 	@Test
 	/**
-	 * A method for testing the calculateRowTotal(Values2D data, int row)
-	 * method when the number of rows is above the boundary of 1 has negative values.
+	 * A method for testing the calculateRowTotal(Values2D data, int row) method
+	 * when the number of rows is above the boundary of 1 has negative values.
 	 */
 	public void calculateRowTotalForNegativeValues() {
 		Values2D values = mockingContext.mock(Values2D.class);
@@ -546,8 +600,8 @@ public class DataUtilitiesTest_v2 {
 
 	@Test
 	/**
-	 * A method for testing the calculateRowTotal(Values2D data, int row)
-	 * method when the number of rows is on the boundary of 1.
+	 * A method for testing the calculateRowTotal(Values2D data, int row) method
+	 * when the number of rows is on the boundary of 1.
 	 */
 	public void calculateRowTotalForOneValues() {
 		Values2D values = mockingContext.mock(Values2D.class);
@@ -567,8 +621,8 @@ public class DataUtilitiesTest_v2 {
 
 	@Test
 	/**
-	 * A method for testing the calculateRowTotal(Values2D data, int row)
-	 * method when the number of rows is below the boundary of 1.
+	 * A method for testing the calculateRowTotal(Values2D data, int row) method
+	 * when the number of rows is below the boundary of 1.
 	 */
 	public void calculateRowTotalForZeroValues() {
 		Values2D values = mockingContext.mock(Values2D.class);
@@ -582,5 +636,4 @@ public class DataUtilitiesTest_v2 {
 		assertEquals("Empty input should return 0", 0, result, .01d);
 	}
 
-	
 }

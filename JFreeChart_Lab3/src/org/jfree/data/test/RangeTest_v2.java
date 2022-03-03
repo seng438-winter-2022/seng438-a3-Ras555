@@ -728,4 +728,12 @@ public class RangeTest_v2 {
 		exception.expect(IllegalArgumentException.class);
 		Range.scale(rang, -2);
 	}
+	
+	// toString
+	
+	@Test
+	public void toStringTest() {
+		Range rang = new Range(5, 10);
+		assertEquals(rang.toString(),"Range[" + 5.0 + "," + 10.0 + "]");
+	}
 }
