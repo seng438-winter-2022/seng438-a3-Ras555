@@ -1,4 +1,4 @@
-package org.jfree.data.test;
+package org.jfree.data.testOld;
 
 import static org.junit.Assert.*;
 
