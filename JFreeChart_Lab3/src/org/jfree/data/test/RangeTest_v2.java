@@ -567,6 +567,26 @@ public class RangeTest_v2 {
 		assertEquals("Combine initilized range with a null range", expected, result);
 	}
 
+	@Test
+	public void combineWithOneNanUpper() {
+
+		Range rang1 = new Range(10.0, Double.NaN);
+		Range rang2 = new Range(5.0, 15);
+		Range expected = new Range(5.0, 15);;
+		Range result = Range.combineIgnoringNaN(rang2, rang1);
+		assertEquals("Combine should result in a range between 5 and 15", expected, result);
+	}
+	
+	@Test
+	public void combineWithOneNanLower() {
+
+		Range rang1 = new Range(Double.NaN, 10.0);
+		Range rang2 = new Range(5.0, 15);
+		Range expected = new Range(5.0, 15);;
+		Range result = Range.combineIgnoringNaN(rang2, rang1);
+		assertEquals("Combine should result in a range between 5 and 15", expected, result);
+	}
+	
 	/**
 	 * A method testing the combineIgnoringNaN with the second range all NaN and the
 	 * first range null
@@ -736,4 +756,5 @@ public class RangeTest_v2 {
 		Range rang = new Range(5, 10);
 		assertEquals(rang.toString(),"Range[" + 5.0 + "," + 10.0 + "]");
 	}
+
 }
