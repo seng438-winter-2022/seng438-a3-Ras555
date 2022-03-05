@@ -638,6 +638,10 @@ public class DataUtilitiesTest_v2 {
 
 	// calculateColumnTotal validRows
 	
+	/**
+	 * A method for testing the calculateColumnTotal with valid rows argument
+	 * the input has a null value among them
+	 */
 	@Test
 	public void calculateColumnTotalValidRowsForNullValue() {
 		int[] validRows = {0,2};
@@ -661,6 +665,10 @@ public class DataUtilitiesTest_v2 {
 	
 	// calculateRowTotal validColumns
 	
+	/**
+	 * A method for testing the calculateRowTotal with valid columns argument
+	 * the input has a null value among them
+	 */
 	@Test
 	public void calculateRowTotalValidColumnsForNullValue() {
 		int[] validColumns = {0,2};

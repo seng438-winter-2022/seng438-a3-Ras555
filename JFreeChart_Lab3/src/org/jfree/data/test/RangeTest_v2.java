@@ -751,6 +751,9 @@ public class RangeTest_v2 {
 	
 	// toString
 	
+	/**
+	 * A method testing toString functionality of range class
+	 */
 	@Test
 	public void toStringTest() {
 		Range rang = new Range(5, 10);
